@@ -39,10 +39,7 @@ parallel_steps['Hello, Parallel World 2'] = {
 createStep([
 	'Prepare Workspace': {
 		checkout scm
-	}
-])
-
-createStep([
+	},
 	'Hello, World': {
 		echo "Hello, World"
 	}
