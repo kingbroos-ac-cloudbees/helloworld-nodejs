@@ -1,26 +1,15 @@
 #!groovy
-
 def parallel_steps = [:]
 
 def createStep(stepClosures) {
-  node() {
-      stage('Prepare Workspace') {
-        checkout scm
-      }
-
+	node() {
       stepClosures.each { k, v ->
         stage(k, v)
       }
 	}
 }
 
-createStep([ 
-  'Hello, World': {
-    echo "Hello, World"
-  }
-])
-
-parallel_steps['Hello, Parallel World 1'] = {
+parallel_steps_with['Hello, Parallel World 1'] = {
   createStep([
     'Parallel World 1': {
      try {
@@ -31,6 +20,7 @@ parallel_steps['Hello, Parallel World 1'] = {
     },
   ])
 }
+
 parallel_steps['Hello, Parallel World 2'] = {
   createStep([
     'Parallel World 2': {
@@ -42,5 +32,18 @@ parallel_steps['Hello, Parallel World 2'] = {
     },
   ])
 }
+
+createStep([
+	'Prepare Workspace': {
+		checkout scm
+	}
+])
+
+createStep([
+	'Hello, World': {
+		echo "Hello, World"
+	}
+])
+
 
 parallel parallel_steps
