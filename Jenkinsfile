@@ -51,4 +51,13 @@ createStep([
 	}
 ])
 
+if(env.BRANCH_NAME == 'master')
+{
+	createStep([
+	'Build and push': {
+		echo "TODO - build and push image"
+		}
+	])
+}
+
 //parallel parallel_steps
