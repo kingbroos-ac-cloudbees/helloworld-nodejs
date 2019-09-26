@@ -2,8 +2,8 @@
 def parallel_steps = [:]
 
 // Create a single step for running. Currently runs on just 1 node
-def createStep(stepClosures) {
-	node() {
+def createStep(stepClosures, node_label = null) {
+	node(node_label) {
       stepClosures.each { k, v ->
         stage(k, v)
       }
@@ -41,7 +41,8 @@ createStep([
 		checkout scm
 	},
 	'Hello, World': {
-		echo "Hello, World"
+		echo "Hello, World!"
+		sh 'java -version'
 	}
 ])
 
