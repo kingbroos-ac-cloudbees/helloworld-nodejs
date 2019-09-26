@@ -60,4 +60,4 @@ if(env.BRANCH_NAME == 'master')
 	])
 }
 
-//parallel parallel_steps
+parallel parallel_steps
