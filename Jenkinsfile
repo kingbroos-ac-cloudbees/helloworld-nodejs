@@ -3,6 +3,7 @@
 def parallel_steps = [:]
 
 def createStep(stepClosures) {
+  node() {
       stage('Prepare Workspace') {
         checkout scm
       }
@@ -10,6 +11,7 @@ def createStep(stepClosures) {
       stepClosures.each { k, v ->
         stage(k, v)
       }
+	}
 }
 
 createStep([ 
