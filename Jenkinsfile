@@ -9,7 +9,7 @@ def createStep(stepClosures) {
 	}
 }
 
-parallel_steps_with['Hello, Parallel World 1'] = {
+parallel_steps['Hello, Parallel World 1'] = {
   createStep([
     'Parallel World 1': {
      try {
