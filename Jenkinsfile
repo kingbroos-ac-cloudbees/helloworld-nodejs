@@ -1,6 +1,7 @@
 #!groovy
 def parallel_steps = [:]
 
+// Create a single step for running. Currently runs on just 1 node
 def createStep(stepClosures) {
 	node() {
       stepClosures.each { k, v ->
@@ -9,6 +10,7 @@ def createStep(stepClosures) {
 	}
 }
 
+// Define parallel steps, because reasons
 parallel_steps['Hello, Parallel World 1'] = {
   createStep([
     'Parallel World 1': {
@@ -33,6 +35,7 @@ parallel_steps['Hello, Parallel World 2'] = {
   ])
 }
 
+// ACTUAL PIPELINE
 createStep([
 	'Prepare Workspace': {
 		checkout scm
@@ -44,6 +47,5 @@ createStep([
 		echo "Hello, World"
 	}
 ])
-
 
 parallel parallel_steps
