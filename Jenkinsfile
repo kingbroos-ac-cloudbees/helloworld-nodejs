@@ -2,14 +2,14 @@
 def parallel_steps = [:]
 
 // Create a single step for running. Currently runs on just 1 node
-def createStep(stepClosures, node_label = null) {
+def createStep(stepClosures, node_label = 'nodejs-app') {
 	node(node_label) {
       stepClosures.each { k, v ->
         stage(k, v)
       }
 	}
 }
-
+/*
 // Define parallel steps, because reasons
 parallel_steps['Hello, Parallel World 1'] = {
   createStep([
@@ -34,16 +34,21 @@ parallel_steps['Hello, Parallel World 2'] = {
     },
   ])
 }
+*/
 
 // ACTUAL PIPELINE
+buildDiscarder(logRotator(numToKeepStr: '2'))
+skipDefaultCheckout true
 createStep([
 	'Prepare Workspace': {
 		checkout scm
 	},
-	'Hello, World': {
-		echo "Hello, World!"
-		sh 'java -version'
+	'Test': {
+		container('nodejs') {
+		  echo 'Hello World!'   
+          sh 'node --version'
+		}
 	}
 ])
 
-parallel parallel_steps
+//parallel parallel_steps
